@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>肌荒れ原因タイプ診断 | 腸活コンシェルジュ ケイ</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
         :root {
             --g1: #3a6347;
@@ -822,9 +823,9 @@
                     そのまま送信するだけでOK🌿<br>
                     ケイから詳しい内容をお届けします
                 </div>
-                <a id="btnLine" class="btn-line" target="_blank">
+                <button id="btnLine" class="btn-line" onclick="sendToLine()">
                     LINEに結果を送る →
-                </a>
+                </button>
             </div>
         </div>
         <div class="footer-note">腸活コンシェルジュ ケイ｜@cho.concierge.kei</div>
@@ -955,6 +956,17 @@
     };
 
     const LINE_ACCOUNT_ID = '473fdxsw';
+    const LIFF_ID = '2010240209-edEjHqcN';
+
+    // LIFF初期化
+    async function initLiff() {
+        try {
+            await liff.init({ liffId: LIFF_ID });
+        } catch (err) {
+            console.warn('LIFF init failed:', err);
+        }
+    }
+    initLiff();
 
     const TYPE_LABELS = {
         A: 'タイプA（腸内環境タイプ）',
@@ -963,6 +975,44 @@
         mixed: 'タイプD（複合タイプ）',
         none: '（チェックが少なかった）'
     };
+
+    // LINEメッセージ（エンコードなし）を生成
+    function buildLineMessageRaw(type) {
+        const typeLabel = TYPE_LABELS[type];
+        const labelsA = getCheckedLabels('listA');
+        const labelsB = getCheckedLabels('listB');
+        const labelsC = getCheckedLabels('listC');
+
+        let msg = `【診断結果】${typeLabel}でした🌿\n\n`;
+        if (labelsA.length > 0) msg += `▼ 腸内環境チェック（${labelsA.length}項目）\n` + labelsA.join('\n') + '\n\n';
+        if (labelsB.length > 0) msg += `▼ 栄養状態チェック（${labelsB.length}項目）\n` + labelsB.join('\n') + '\n\n';
+        if (labelsC.length > 0) msg += `▼ 自律神経チェック（${labelsC.length}項目）\n` + labelsC.join('\n') + '\n\n';
+        msg += 'もう少し詳しく教えてください！';
+        return msg;
+    }
+
+    // LINEに送信（LINE内ならliff.sendMessages、外部ブラウザならリンク）
+    async function sendToLine() {
+        const btn = document.getElementById('btnLine');
+        const type = btn.dataset.type;
+        const messageText = buildLineMessageRaw(type);
+
+        if (liff.isInClient()) {
+            try {
+                await liff.sendMessages([{ type: 'text', text: messageText }]);
+                btn.textContent = '✓ 送信しました！';
+                btn.style.background = '#A8C5B0';
+                btn.style.color = '#2C3E30';
+                btn.onclick = null;
+            } catch (err) {
+                console.error('送信エラー:', err);
+                window.open(`https://line.me/R/ti/p/@${LINE_ACCOUNT_ID}`, '_blank');
+            }
+        } else {
+            // 外部ブラウザのフォールバック：LINEアプリを開く
+            window.open(`https://line.me/R/ti/p/@${LINE_ACCOUNT_ID}`, '_blank');
+        }
+    }
 
     // チェック済みの項目テキストを取得
     function getCheckedLabels(listId) {
@@ -1042,9 +1092,8 @@
                 <div class="result-points-wrap">${pts}</div>
             </div>`;
 
-        // LINEボタンのURLをタイプ＋チェック項目込みでセット
-        const lineUrl = `https://line.me/R/oaMessage/${LINE_ACCOUNT_ID}/?${buildLineMessage(type)}`;
-        document.getElementById('btnLine').href = lineUrl;
+        // タイプをボタンに保存（sendToLine()で使用）
+        document.getElementById('btnLine').dataset.type = type;
 
         showScreen('results');
     }

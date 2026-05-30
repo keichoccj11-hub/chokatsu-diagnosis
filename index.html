@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>肌荒れ原因タイプ診断 | 腸活コンシェルジュ ケイ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --g1: #3a6347;
+            --g2: #4A7C59;
+            --g3: #7aab88;
+            --mint: #A8C5B0;
+            --yellow: #F4D35E;
+            --peach: #F9C784;
+            --cream: #F7F2E9;
+            --cream2: #EDE7D9;
+            --white: #FFFFFF;
+            --text: #2C3E30;
+            --sub: #6B7E6F;
+            --shadow: rgba(74,124,89,0.14);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, .display {
+            font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+        }
+
+        .screen { display:none; min-height:100vh; flex-direction:column; }
+        .screen.active { display:flex; }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━
+           表紙
+        ━━━━━━━━━━━━━━━━━━━━━━━ */
+        #cover {
+            background: linear-gradient(168deg, #2a4e38 0%, var(--g2) 50%, #6da87a 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            padding: 0 26px 56px;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* ドット模様 */
+        .cover-dots {
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+        }
+
+        /* 背景の大きな葉 */
+        .cover-leaf-bg {
+            position: absolute;
+            pointer-events: none;
+        }
+        .cover-leaf-tl { top:-40px; left:-30px; width:200px; opacity:.09; transform:rotate(-18deg); }
+        .cover-leaf-br { bottom:-50px; right:-35px; width:220px; opacity:.09; transform:rotate(162deg); }
+
+        /* メインイラスト */
+        .cover-illo {
+            width: 190px;
+            height: 190px;
+            margin: 52px auto 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            background: rgba(255,255,255,0.16);
+            border: 1px solid rgba(255,255,255,0.28);
+            border-radius: 30px;
+            padding: 5px 18px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-main-text {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 28px;
+        }
+
+        .cover-eyebrow {
+            font-size: 14px;
+            font-weight: 300;
+            opacity: .8;
+            margin-bottom: 6px;
+        }
+
+        .cover-title {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 30px;
+            font-weight: 900;
+            line-height: 1.45;
+            margin-bottom: 6px;
+        }
+
+        .cover-title .accent-box {
+            display: inline-block;
+            background: var(--yellow);
+            color: var(--g1);
+            border-radius: 8px;
+            padding: 0 8px 2px;
+            font-size: 32px;
+        }
+
+        .cover-title-sub {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            opacity: .85;
+            letter-spacing: 3px;
+            margin-top: 4px;
+        }
+
+        .cover-card {
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 20px;
+            padding: 20px 18px;
+            margin-bottom: 32px;
+            font-size: 14px;
+            line-height: 1.95;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-card-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .cover-card-icon { font-size: 22px; flex-shrink:0; margin-top:2px; }
+
+        .btn-start {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            background: var(--yellow);
+            color: var(--g1);
+            border: none;
+            border-radius: 50px;
+            padding: 18px 52px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+            transition: transform .25s, box-shadow .25s;
+            position: relative;
+            z-index: 1;
+        }
+        .btn-start:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,0,0,0.28); }
+
+        .cover-meta {
+            margin-top: 14px;
+            font-size: 12px;
+            opacity: .6;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━
+           質問スクリーン
+        ━━━━━━━━━━━━━━━━━━━━━━━ */
+        .q-header {
+            background: var(--g2);
+            color: white;
+            padding: 18px 22px 16px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .q-header-dots {
+            position: absolute; inset:0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+            background-size: 18px 18px;
+            pointer-events: none;
+        }
+
+        .q-header-leaf {
+            position: absolute;
+            right: -15px; bottom: -20px;
+            width: 110px; opacity: .1;
+            transform: rotate(20deg);
+            pointer-events: none;
+        }
+
+        .progress-wrap {
+            background: rgba(255,255,255,0.22);
+            border-radius: 6px;
+            height: 5px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--yellow);
+            border-radius: 6px;
+            transition: width .5s ease;
+        }
+
+        .section-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            opacity: .7;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-head-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-icon-wrap {
+            width: 42px; height: 42px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* 質問ボディ */
+        .q-body {
+            padding: 18px 16px 40px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .section-intro {
+            background: white;
+            border-radius: 14px;
+            padding: 13px 16px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            color: var(--sub);
+            line-height: 1.7;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+        }
+
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-item {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color .2s, background .2s, transform .12s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .checkbox-item:active { transform: scale(.97); }
+        .checkbox-item.checked {
+            border-color: var(--g2);
+            background: #eef7f1;
+            box-shadow: 0 3px 12px var(--shadow);
+        }
+
+        .custom-cb {
+            width: 26px; height: 26px; min-width: 26px;
+            border: 2px solid #D2DDD5;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all .2s;
+        }
+        .checkbox-item.checked .custom-cb {
+            background: var(--g2);
+            border-color: var(--g2);
+        }
+
+        .cb-check { color:white; font-size:14px; display:none; font-weight:700; }
+        .checkbox-item.checked .cb-check { display:block; }
+
+        .cb-label { font-size:14px; line-height:1.65; color:var(--text); padding-top:2px; }
+
+        .btn-next {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            background: linear-gradient(135deg, var(--g1) 0%, var(--g3) 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 18px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 6px 22px var(--shadow);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .btn-next:hover { transform: translateY(-2px); box-shadow: 0 10px 28px var(--shadow); }
+        .btn-next:active { transform: scale(.98); }
+
+        /* ━━━━━━━━━━━━━━━━━━━━━━━
+           結果スクリーン
+        ━━━━━━━━━━━━━━━━━━━━━━━ */
+        #results { background: var(--cream); }
+
+        .result-hero {
+            background: linear-gradient(155deg, #2a4e38 0%, var(--g2) 55%, #6da87a 100%);
+            color: white;
+            padding: 38px 24px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .result-hero-dots {
+            position:absolute; inset:0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events:none;
+        }
+
+        .result-hero-badge {
+            background: var(--yellow);
+            color: var(--g1);
+            border-radius: 30px;
+            padding: 4px 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-hero-title {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-hero-sub {
+            font-size: 13px;
+            opacity: .75;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-body { padding: 20px 16px 0; }
+
+        /* スコアバー */
+        .score-row { display:flex; gap:8px; margin-bottom:18px; }
+
+        .score-cell {
+            flex:1;
+            background: white;
+            border-radius: 16px;
+            padding: 14px 6px;
+            text-align: center;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all .35s;
+        }
+        .score-cell.top {
+            background: var(--g2);
+            color: white;
+            border-color: var(--g2);
+            box-shadow: 0 6px 18px var(--shadow);
+        }
+
+        .score-cell-label { font-size:10px; opacity:.65; margin-bottom:4px; }
+        .score-cell-value { font-size:28px; font-weight:700; line-height:1; font-family:'Zen Kaku Gothic New',sans-serif; }
+        .score-cell-max { font-size:10px; opacity:.5; margin-top:2px; }
+
+        /* 結果カード */
+        .result-card {
+            background: white;
+            border-radius: 22px;
+            padding: 0 0 24px;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .result-card-top {
+            padding: 28px 24px 20px;
+            position: relative;
+        }
+
+        .result-card-illo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 18px;
+            display: block;
+        }
+
+        .result-badge {
+            background: var(--g2);
+            color: white;
+            border-radius: 30px;
+            padding: 4px 16px;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .result-type-name {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--g2);
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .result-desc {
+            font-size: 14px;
+            line-height: 1.95;
+            color: var(--sub);
+        }
+
+        .result-points-wrap {
+            background: var(--cream);
+            margin: 0 16px;
+            border-radius: 14px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .result-point {
+            font-size: 13px;
+            color: var(--g1);
+            line-height: 1.7;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .point-dot {
+            width: 20px; height: 20px; min-width: 20px;
+            background: var(--mint);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+        .point-dot svg { width:10px; height:10px; }
+
+        /* 中間カード */
+        .mid-card {
+            background: white;
+            border-radius: 22px;
+            padding: 26px 20px;
+            margin-bottom: 14px;
+            text-align: center;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+        }
+
+        .mid-card-illo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+        }
+
+        .mid-card-title {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .mid-card p { font-size:14px; line-height:1.95; color:var(--sub); }
+        .mid-card strong { color:var(--text); }
+
+        /* LINE CTA */
+        .line-cta {
+            background: linear-gradient(150deg, #2a4e38 0%, var(--g2) 55%, #6da87a 100%);
+            border-radius: 22px;
+            padding: 32px 24px;
+            text-align: center;
+            color: white;
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-dots {
+            position:absolute; inset:0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events:none;
+        }
+
+        .cta-content { position:relative; z-index:1; }
+
+        .cta-icon { font-size:40px; margin-bottom:14px; display:block; }
+
+        .line-cta-title {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .line-cta-text {
+            font-size: 13px;
+            opacity: .88;
+            line-height: 1.95;
+            margin-bottom: 26px;
+        }
+
+        .btn-line {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+            background: var(--yellow);
+            color: var(--g1);
+            border: none;
+            border-radius: 50px;
+            padding: 18px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            display: block;
+            text-decoration: none;
+            box-shadow: 0 6px 22px rgba(0,0,0,0.22);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .btn-line:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.28); }
+
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #bbb;
+            padding: 16px 0 52px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━
+     表紙
+━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div id="cover" class="screen active">
+    <div class="cover-dots"></div>
+
+    <!-- 背景の葉 -->
+    <svg class="cover-leaf-bg cover-leaf-tl" viewBox="0 0 200 320" fill="none">
+        <path d="M100 300C20 210-20 100 80 20 120-10 180 40 160 130 140 220 100 300 100 300Z" fill="white"/>
+        <path d="M100 300C100 190 100 80 80 20" stroke="white" stroke-width="3.5"/>
+        <path d="M58 118C78 98 112 88 160 118" stroke="white" stroke-width="2"/>
+        <path d="M68 165C88 148 118 142 152 155" stroke="white" stroke-width="2"/>
+        <path d="M78 210C98 196 122 192 146 202" stroke="white" stroke-width="2"/>
+    </svg>
+    <svg class="cover-leaf-bg cover-leaf-br" viewBox="0 0 200 320" fill="none">
+        <path d="M100 300C20 210-20 100 80 20 120-10 180 40 160 130 140 220 100 300 100 300Z" fill="white"/>
+        <path d="M100 300C100 190 100 80 80 20" stroke="white" stroke-width="3.5"/>
+        <path d="M58 118C78 98 112 88 160 118" stroke="white" stroke-width="2"/>
+        <path d="M68 165C88 148 118 142 152 155" stroke="white" stroke-width="2"/>
+    </svg>
+
+    <!-- メインイラスト -->
+    <div class="cover-illo">
+        <svg viewBox="0 0 190 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- 外側の円 -->
+            <circle cx="95" cy="95" r="88" fill="rgba(255,255,255,0.1)"/>
+            <circle cx="95" cy="95" r="72" fill="rgba(255,255,255,0.12)"/>
+
+            <!-- 大きな葉（左） -->
+            <path d="M38 148C18 114 24 76 52 68 44 92 38 120 38 148Z" fill="rgba(255,255,255,0.75)"/>
+            <path d="M38 148C44 118 48 94 52 68" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M44 112C50 104 54 96 52 68" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+
+            <!-- 大きな葉（右） -->
+            <path d="M152 42C172 60 170 96 146 106 150 82 152 62 152 42Z" fill="rgba(255,255,255,0.7)"/>
+            <path d="M152 42C150 66 148 86 146 106" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+
+            <!-- 中央：腸モチーフ（丸みを持たせてかわいく） -->
+            <path d="M62 106C62 80 74 64 90 64C106 64 116 76 116 90C116 104 106 114 92 114C78 114 72 102 82 96C92 90 106 96 106 106" stroke="rgba(255,255,255,0.92)" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+
+            <!-- 小花（左上） -->
+            <circle cx="68" cy="52" r="5" fill="rgba(255,255,255,0.5)"/>
+            <circle cx="68" cy="42" r="4" fill="rgba(255,255,255,0.4)"/>
+            <circle cx="60" cy="48" r="3.5" fill="rgba(255,255,255,0.35)"/>
+            <circle cx="76" cy="48" r="3.5" fill="rgba(255,255,255,0.35)"/>
+            <circle cx="68" cy="52" r="2.5" fill="rgba(244,211,94,0.8)"/>
+
+            <!-- 小花（右下） -->
+            <circle cx="128" cy="132" r="4.5" fill="rgba(255,255,255,0.45)"/>
+            <circle cx="128" cy="122" r="3.5" fill="rgba(255,255,255,0.35)"/>
+            <circle cx="120" cy="128" r="3" fill="rgba(255,255,255,0.3)"/>
+            <circle cx="136" cy="128" r="3" fill="rgba(255,255,255,0.3)"/>
+            <circle cx="128" cy="132" r="2" fill="rgba(244,211,94,0.75)"/>
+
+            <!-- キラキラ -->
+            <path d="M142 62 L144 56 L146 62 L152 64 L146 66 L144 72 L142 66 L136 64Z" fill="rgba(255,255,255,0.65)"/>
+            <path d="M52 126 L53.5 122 L55 126 L59 127.5 L55 129 L53.5 133 L52 129 L48 127.5Z" fill="rgba(255,255,255,0.55)"/>
+            <circle cx="118" cy="50" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle cx="42" cy="82" r="2" fill="rgba(255,255,255,0.5)"/>
+            <circle cx="148" cy="98" r="1.5" fill="rgba(255,255,255,0.45)"/>
+        </svg>
+    </div>
+
+    <div class="cover-badge">腸活コンシェルジュ ケイ</div>
+
+    <div class="cover-main-text">
+        <div class="cover-eyebrow">あなたの肌荒れが治らない</div>
+        <div class="cover-title">
+            <span class="accent-box">"本当の原因"</span><br>がわかる
+        </div>
+        <div class="cover-title-sub">肌荒れ原因タイプ診断</div>
+    </div>
+
+    <div class="cover-card">
+        <div class="cover-card-row">
+            <span class="cover-card-icon">🌿</span>
+            <span>スキンケアを変えても食事に気をつけても、なぜか繰り返す肌荒れ。<br><br>外側からのケアだけでは解決しない原因があるかもしれません。<br><br>3セクション・全21問に答えて、あなたのタイプを確認しましょう。</span>
+        </div>
+    </div>
+
+    <button class="btn-start" onclick="startDiagnosis()">診断スタート →</button>
+    <div class="cover-meta">
+        <span>⏱ 約3分</span>
+        <span>·</span>
+        <span>全21問</span>
+        <span>·</span>
+        <span>無料</span>
+    </div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Section A
+━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div id="sectionA" class="screen">
+    <div class="q-header">
+        <div class="q-header-dots"></div>
+        <svg class="q-header-leaf" viewBox="0 0 200 320" fill="none">
+            <path d="M100 300C20 210-20 100 80 20 120-10 180 40 160 130 140 220 100 300 100 300Z" fill="white"/>
+        </svg>
+        <div class="progress-wrap"><div class="progress-fill" style="width:33%"></div></div>
+        <div class="section-label">SECTION A · 1/3</div>
+        <div class="section-head-row">
+            <div class="section-icon-wrap">🦠</div>
+            <div class="section-title">腸内環境チェック</div>
+        </div>
+    </div>
+    <div class="q-body">
+        <div class="section-intro">
+            <span style="font-size:20px;flex-shrink:0">📋</span>
+            <span>当てはまるものをチェックしてください。複数選択できます。</span>
+        </div>
+        <div class="checkbox-list" id="listA">
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">お腹が張りやすい・ガスが出やすい</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">便秘や下痢を繰り返す（または交互に起きる）</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">食後に眠くなりやすい</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">甘いもの・パン・麺類が好きでよく食べる</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">外食や加工食品が多い</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">発酵食品（ヨーグルト・納豆など）をほぼ食べない</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">抗生物質を過去に長期服用したことがある</div></div>
+        </div>
+        <button class="btn-next" onclick="goTo('sectionB')">次へ →</button>
+    </div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Section B
+━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div id="sectionB" class="screen">
+    <div class="q-header">
+        <div class="q-header-dots"></div>
+        <svg class="q-header-leaf" viewBox="0 0 200 320" fill="none">
+            <path d="M100 300C20 210-20 100 80 20 120-10 180 40 160 130 140 220 100 300 100 300Z" fill="white"/>
+        </svg>
+        <div class="progress-wrap"><div class="progress-fill" style="width:66%"></div></div>
+        <div class="section-label">SECTION B · 2/3</div>
+        <div class="section-head-row">
+            <div class="section-icon-wrap">🌱</div>
+            <div class="section-title">栄養状態チェック</div>
+        </div>
+    </div>
+    <div class="q-body">
+        <div class="section-intro">
+            <span style="font-size:20px;flex-shrink:0">📋</span>
+            <span>当てはまるものをチェックしてください。複数選択できます。</span>
+        </div>
+        <div class="checkbox-list" id="listB">
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">食事量が少ない・または偏っている</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">ダイエットをしていた時期がある</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">肌がくすみやすい・顔色が悪いと言われる</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">爪が割れやすい・髪にコシがない</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">朝起きても疲れが取れていないことが多い</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">貧血気味・立ちくらみがある</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">タンパク質（肉・魚・卵）をあまり食べない</div></div>
+        </div>
+        <button class="btn-next" onclick="goTo('sectionC')">次へ →</button>
+    </div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Section C
+━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div id="sectionC" class="screen">
+    <div class="q-header">
+        <div class="q-header-dots"></div>
+        <svg class="q-header-leaf" viewBox="0 0 200 320" fill="none">
+            <path d="M100 300C20 210-20 100 80 20 120-10 180 40 160 130 140 220 100 300 100 300Z" fill="white"/>
+        </svg>
+        <div class="progress-wrap"><div class="progress-fill" style="width:99%"></div></div>
+        <div class="section-label">SECTION C · 3/3</div>
+        <div class="section-head-row">
+            <div class="section-icon-wrap">🌊</div>
+            <div class="section-title">自律神経チェック</div>
+        </div>
+    </div>
+    <div class="q-body">
+        <div class="section-intro">
+            <span style="font-size:20px;flex-shrink:0">📋</span>
+            <span>当てはまるものをチェックしてください。複数選択できます。</span>
+        </div>
+        <div class="checkbox-list" id="listC">
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">ストレスを感じると肌荒れが悪化する</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">睡眠が浅い・寝付きが悪い</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">生理前に肌荒れがひどくなる</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">緊張するとお腹が痛くなりやすい</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">仕事や人間関係でストレスを慢性的に感じている</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">休日でもなかなかリラックスできない</div></div>
+            <div class="checkbox-item" onclick="toggle(this)"><div class="custom-cb"><span class="cb-check">✓</span></div><div class="cb-label">スマホを寝る直前まで見ていることが多い</div></div>
+        </div>
+        <button class="btn-next" onclick="showResults()">結果を見る →</button>
+    </div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━
+     結果スクリーン
+━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<div id="results" class="screen">
+    <div class="result-hero">
+        <div class="result-hero-dots"></div>
+        <div class="result-hero-badge">✨ 診断完了</div>
+        <div class="result-hero-title">あなたの診断結果</div>
+        <div class="result-hero-sub">お疲れさまでした 🌿</div>
+    </div>
+    <div class="result-body">
+        <div class="score-row" id="scoreRow"></div>
+        <div id="resultCard"></div>
+        <div class="mid-card">
+            <div class="mid-card-illo">
+                <svg viewBox="0 0 80 80" fill="none">
+                    <circle cx="40" cy="40" r="36" fill="#F0F8F2"/>
+                    <!-- 吹き出し -->
+                    <rect x="18" y="20" width="44" height="28" rx="10" fill="white" stroke="#A8C5B0" stroke-width="2"/>
+                    <path d="M30 48 L26 56 L38 48" fill="white" stroke="#A8C5B0" stroke-width="2" stroke-linejoin="round"/>
+                    <!-- ドット -->
+                    <circle cx="30" cy="34" r="3" fill="#4A7C59"/>
+                    <circle cx="40" cy="34" r="3" fill="#4A7C59"/>
+                    <circle cx="50" cy="34" r="3" fill="#4A7C59"/>
+                </svg>
+            </div>
+            <div class="mid-card-title">どうでしたか？</div>
+            <p>
+                「心当たりがある」<br>
+                「でも、何をすればいいかわからない」<br><br>
+                タイプがわかっても、自分に合った<br>
+                <strong>順番・量・やり方</strong>がわからないと<br>
+                なかなか結果につながりません。
+            </p>
+        </div>
+        <div class="line-cta">
+            <div class="cta-dots"></div>
+            <div class="cta-content">
+                <span class="cta-icon">🌿</span>
+                <div class="line-cta-title">あなたの結果をLINEに送って<br>詳しく教えてもらおう</div>
+                <div class="line-cta-text">
+                    下のボタンをタップすると、<br>
+                    あなたのタイプが入力された状態で<br>
+                    LINEが開きます。<br><br>
+                    そのまま送信するだけでOK🌿<br>
+                    ケイから詳しい内容をお届けします
+                </div>
+                <a id="btnLine" class="btn-line" target="_blank">
+                    LINEに結果を送る →
+                </a>
+            </div>
+        </div>
+        <div class="footer-note">腸活コンシェルジュ ケイ｜@cho.concierge.kei</div>
+    </div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━
+     JavaScript
+━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+<script>
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0, 0);
+    }
+    function startDiagnosis() { showScreen('sectionA'); }
+    function goTo(id) { showScreen(id); }
+    function toggle(el) { el.classList.toggle('checked'); }
+    function count(id) {
+        return document.querySelectorAll('#' + id + ' .checkbox-item.checked').length;
+    }
+
+    // タイプ別イラスト
+    const ILLOS = {
+        A: `<svg viewBox="0 0 100 100" fill="none" class="result-card-illo">
+              <circle cx="50" cy="50" r="46" fill="#F0F8F2"/>
+              <!-- 腸の曲線（太め・丸み） -->
+              <path d="M28 56C28 36 40 24 54 24C68 24 76 36 76 48C76 60 66 68 52 68C38 68 34 56 44 50C54 44 66 50 66 60" stroke="#4A7C59" stroke-width="5" stroke-linecap="round" fill="none"/>
+              <!-- 善玉菌の小丸 -->
+              <circle cx="36" cy="38" r="4" fill="#A8C5B0"/>
+              <circle cx="72" cy="38" r="3" fill="#A8C5B0"/>
+              <circle cx="74" cy="58" r="3.5" fill="#A8C5B0"/>
+              <!-- 葉 -->
+              <path d="M22 76C14 62 18 48 28 52 24 62 22 70 22 76Z" fill="#7aab88"/>
+              <path d="M22 76C24 64 26 56 28 52" stroke="#4A7C59" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- キラキラ -->
+              <path d="M78 24L79.5 20L81 24L85 25.5L81 27L79.5 31L78 27L74 25.5Z" fill="#F4D35E"/>
+            </svg>`,
+        B: `<svg viewBox="0 0 100 100" fill="none" class="result-card-illo">
+              <circle cx="50" cy="50" r="46" fill="#F0F8F2"/>
+              <!-- 茎 -->
+              <path d="M50 20L50 78" stroke="#4A7C59" stroke-width="3" stroke-linecap="round"/>
+              <!-- 上の芽 -->
+              <path d="M50 20C50 12 56 10 58 16 54 17 52 18 50 20Z" fill="#4A7C59"/>
+              <!-- 葉（左上） -->
+              <path d="M50 32C42 26 32 28 30 36 40 32 46 34 50 32Z" fill="#7aab88"/>
+              <!-- 葉（右上） -->
+              <path d="M50 42C58 36 68 38 70 46 60 42 54 44 50 42Z" fill="#7aab88"/>
+              <!-- 葉（左中） -->
+              <path d="M50 54C40 48 32 52 32 60 42 56 46 56 50 54Z" fill="#A8C5B0"/>
+              <!-- 葉（右下） -->
+              <path d="M50 64C58 58 66 62 64 70 56 66 52 66 50 64Z" fill="#A8C5B0" opacity=".8"/>
+              <!-- キラキラ -->
+              <circle cx="72" cy="28" r="3" fill="#F4D35E"/>
+              <circle cx="26" cy="52" r="2.5" fill="#F4D35E"/>
+              <path d="M76 62L77 59L78 62L81 63L78 64L77 67L76 64L73 63Z" fill="#F4D35E"/>
+            </svg>`,
+        C: `<svg viewBox="0 0 100 100" fill="none" class="result-card-illo">
+              <circle cx="50" cy="50" r="46" fill="#F0F8F2"/>
+              <!-- 波（3本） -->
+              <path d="M16 36C24 28 34 32 40 40 46 48 56 52 64 44 72 36 80 40 84 48" stroke="#4A7C59" stroke-width="4" stroke-linecap="round" fill="none"/>
+              <path d="M16 52C24 44 34 48 40 56 46 64 56 68 64 60 72 52 80 56 84 64" stroke="#A8C5B0" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+              <path d="M16 68C24 60 34 64 40 72 46 80 56 80 64 72" stroke="#A8C5B0" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".6"/>
+              <!-- 葉 -->
+              <path d="M26 22C18 14 14 20 18 26 22 24 24 22 26 22Z" fill="#7aab88"/>
+              <path d="M76 76C84 84 88 78 84 72 80 74 78 76 76 76Z" fill="#7aab88"/>
+              <!-- キラキラ -->
+              <path d="M78 22L79 19L80 22L83 23L80 24L79 27L78 24L75 23Z" fill="#F4D35E"/>
+              <circle cx="20" cy="74" r="2.5" fill="#F4D35E"/>
+            </svg>`,
+        mixed: `<svg viewBox="0 0 100 100" fill="none" class="result-card-illo">
+              <circle cx="50" cy="50" r="46" fill="#F0F8F2"/>
+              <!-- 中央サークル -->
+              <circle cx="50" cy="50" r="16" stroke="#4A7C59" stroke-width="3" fill="white"/>
+              <circle cx="50" cy="50" r="6" fill="#4A7C59" opacity=".7"/>
+              <!-- 枝1（上） -->
+              <path d="M50 34L50 22" stroke="#4A7C59" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M50 22C50 16 56 14 58 20 54 21 52 21 50 22Z" fill="#7aab88"/>
+              <!-- 枝2（右） -->
+              <path d="M66 50L78 50" stroke="#A8C5B0" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M78 50C84 50 86 56 80 58 79 54 79 52 78 50Z" fill="#A8C5B0"/>
+              <!-- 枝3（左） -->
+              <path d="M34 50L22 50" stroke="#A8C5B0" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M22 50C16 50 14 44 20 42 21 46 21 48 22 50Z" fill="#A8C5B0"/>
+              <!-- 枝4（右下） -->
+              <path d="M60 64L70 74" stroke="#7aab88" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="74" cy="78" r="4" fill="#7aab88" opacity=".7"/>
+              <!-- キラキラ -->
+              <path d="M24 24L25 21L26 24L29 25L26 26L25 29L24 26L21 25Z" fill="#F4D35E"/>
+              <circle cx="78" cy="28" r="2.5" fill="#F4D35E"/>
+            </svg>`,
+        none: `<svg viewBox="0 0 100 100" fill="none" class="result-card-illo">
+              <circle cx="50" cy="50" r="46" fill="#F0F8F2"/>
+              <circle cx="50" cy="50" r="22" stroke="#A8C5B0" stroke-width="2.5" stroke-dasharray="5 5" fill="none"/>
+              <path d="M50 28C50 22 56 20 58 26 54 27 52 27 50 28Z" fill="#A8C5B0"/>
+              <path d="M50 28L50 38" stroke="#A8C5B0" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="5" fill="#A8C5B0" opacity=".6"/>
+              <path d="M30 26L31 23L32 26L35 27L32 28L31 31L30 28L27 27Z" fill="#F4D35E" opacity=".7"/>
+            </svg>`
+    };
+
+    const RESULTS = {
+        A: {
+            badge: 'タイプ A', name: '腸内環境タイプ',
+            desc: '腸内の善玉菌バランスが乱れている可能性があります。有害物質が腸壁から血液に入りやすくなることで全身に炎症が広がり、肌荒れとして現れることがあります。',
+            points: ['食物繊維・発酵食品・水分から腸内環境を整えるのが第一歩', '糖質・添加物の過多が善玉菌を減らす主な原因に', '腸内フローラのバランスを戻すには、個別アプローチが効果的']
+        },
+        B: {
+            badge: 'タイプ B', name: '栄養不足タイプ',
+            desc: '実は、栄養不足は肌だけでなく腸にも直撃します。腸内の善玉菌は食物繊維やタンパク質を"エサ"にして生きているため、栄養が偏ると善玉菌が減り、腸のバリア機能が低下。有害物質が血液に漏れ出し、肌荒れとして現れることがあります。',
+            points: ['スキンケアより先に「腸に届く栄養」を整えることが根本ケア', '善玉菌のエサ（食物繊維・タンパク質）が足りないと腸活は効果が出にくい', '何を食べるかより、何が足りていないかを見極めることが大切']
+        },
+        C: {
+            badge: 'タイプ C', name: 'ストレス・自律神経タイプ',
+            desc: 'ストレスを感じると腸の動きを司る自律神経が乱れ、腸内環境が一気に悪化します。「腸脳相関」と呼ばれるこの仕組みで、ストレスが腸のバリア機能を弱め、肌荒れを引き起こします。食事を変えても改善しない場合、腸と神経系への同時アプローチが必要です。',
+            points: ['ストレスが腸内環境を乱し、そのまま肌に出ているサインかも', '腸と脳は神経でつながっており、メンタルケア＝腸活でもある', '食事・睡眠・自律神経の3点セットで腸から肌を整えるのが効果的']
+        },
+        mixed: {
+            badge: 'タイプ D', name: '複合タイプ',
+            desc: '複数の原因が絡み合っています。腸内環境・栄養・ストレスのどれか一つだけでなく、複合的な要因が腸に影響し、肌荒れにつながっている状態です。',
+            points: ['どこから手をつければいいかを整理することが最初の一歩', '原因が複数あるぶん、優先順位と順番が重要になる', '個別に状態を確認しながら腸から整えていくのが効果的']
+        },
+        none: {
+            badge: '結果', name: 'チェックが少なかった方',
+            desc: '現時点でチェックが少ない状態です。それでも「なんとなく治らない」という実感があれば、自覚しにくい腸の乱れが隠れているかもしれません。',
+            points: ['自覚症状が少なくても、慢性的な軽度の腸の乱れが肌に出ることがある', '気になる症状があれば、腸活の観点から一度確認してみましょう', 'まずは気軽にご相談ください']
+        }
+    };
+
+    const LINE_ACCOUNT_ID = '473fdxsw';
+
+    const TYPE_LABELS = {
+        A: 'タイプA（腸内環境タイプ）',
+        B: 'タイプB（栄養不足タイプ）',
+        C: 'タイプC（ストレス・自律神経タイプ）',
+        mixed: 'タイプD（複合タイプ）',
+        none: '（チェックが少なかった）'
+    };
+
+    // チェック済みの項目テキストを取得
+    function getCheckedLabels(listId) {
+        return Array.from(
+            document.querySelectorAll('#' + listId + ' .checkbox-item.checked .cb-label')
+        ).map(el => '・' + el.textContent.trim());
+    }
+
+    // タイプ・チェック項目を含むLINEメッセージを生成
+    function buildLineMessage(type) {
+        const typeLabel = TYPE_LABELS[type];
+        const labelsA = getCheckedLabels('listA');
+        const labelsB = getCheckedLabels('listB');
+        const labelsC = getCheckedLabels('listC');
+
+        let msg = `【診断結果】${typeLabel}でした🌿\n\n`;
+
+        if (labelsA.length > 0) {
+            msg += `▼ 腸内環境チェック（${labelsA.length}項目）\n`;
+            msg += labelsA.join('\n') + '\n\n';
+        }
+        if (labelsB.length > 0) {
+            msg += `▼ 栄養状態チェック（${labelsB.length}項目）\n`;
+            msg += labelsB.join('\n') + '\n\n';
+        }
+        if (labelsC.length > 0) {
+            msg += `▼ 自律神経チェック（${labelsC.length}項目）\n`;
+            msg += labelsC.join('\n') + '\n\n';
+        }
+
+        msg += 'もう少し詳しく教えてください！';
+        return encodeURIComponent(msg);
+    }
+
+    const POINT_ICON = `<div class="point-dot"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+
+    function showResults() {
+        const a = count('listA'), b = count('listB'), c = count('listC');
+        const max = Math.max(a, b, c);
+
+        document.getElementById('scoreRow').innerHTML = `
+            <div class="score-cell ${a === max && a > 0 ? 'top' : ''}">
+                <div class="score-cell-label">腸内環境</div>
+                <div class="score-cell-value">${a}</div>
+                <div class="score-cell-max">/ 7</div>
+            </div>
+            <div class="score-cell ${b === max && b > 0 && b >= a ? 'top' : ''}">
+                <div class="score-cell-label">栄養不足</div>
+                <div class="score-cell-value">${b}</div>
+                <div class="score-cell-max">/ 7</div>
+            </div>
+            <div class="score-cell ${c === max && c > 0 && c >= a && c >= b ? 'top' : ''}">
+                <div class="score-cell-label">自律神経</div>
+                <div class="score-cell-value">${c}</div>
+                <div class="score-cell-max">/ 7</div>
+            </div>`;
+
+        const total = a + b + c;
+        let type;
+        if (total === 0)                      type = 'none';
+        else if (a >= 2 && b >= 2 && c >= 2) type = 'mixed';
+        else if (a >= b && a >= c)            type = 'A';
+        else if (b >= a && b >= c)            type = 'B';
+        else                                  type = 'C';
+
+        const r = RESULTS[type];
+        const pts = r.points.map(p => `<div class="result-point">${POINT_ICON}<span>${p}</span></div>`).join('');
+
+        document.getElementById('resultCard').innerHTML = `
+            <div class="result-card">
+                <div class="result-card-top">
+                    ${ILLOS[type]}
+                    <div class="result-badge">${r.badge}</div>
+                    <div class="result-type-name">${r.name}</div>
+                    <div class="result-desc">${r.desc}</div>
+                </div>
+                <div class="result-points-wrap">${pts}</div>
+            </div>`;
+
+        // LINEボタンのURLをタイプ＋チェック項目込みでセット
+        const lineUrl = `https://line.me/R/oaMessage/${LINE_ACCOUNT_ID}/?${buildLineMessage(type)}`;
+        document.getElementById('btnLine').href = lineUrl;
+
+        showScreen('results');
+    }
+</script>
+</body>
+</html>

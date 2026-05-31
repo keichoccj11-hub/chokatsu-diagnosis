@@ -976,30 +976,42 @@
         none: '（チェックが少なかった）'
     };
 
-    // LINEメッセージ（エンコードなし）を生成
-    function buildLineMessageRaw(type) {
-        const typeLabel = TYPE_LABELS[type];
+    // 1通目：キーワードトリガー用（完全一致対応）
+    const TYPE_KEYWORDS = {
+        A: 'タイプA',
+        B: 'タイプB',
+        C: 'タイプC',
+        mixed: 'タイプD',
+        none: 'タイプなし'
+    };
+
+    // 2通目：チェック項目の詳細
+    function buildDetailMessage(type) {
         const labelsA = getCheckedLabels('listA');
         const labelsB = getCheckedLabels('listB');
         const labelsC = getCheckedLabels('listC');
 
-        let msg = `【診断結果】${typeLabel}でした🌿\n\n`;
-        if (labelsA.length > 0) msg += `▼ 腸内環境チェック（${labelsA.length}項目）\n` + labelsA.join('\n') + '\n\n';
-        if (labelsB.length > 0) msg += `▼ 栄養状態チェック（${labelsB.length}項目）\n` + labelsB.join('\n') + '\n\n';
-        if (labelsC.length > 0) msg += `▼ 自律神経チェック（${labelsC.length}項目）\n` + labelsC.join('\n') + '\n\n';
-        msg += 'もう少し詳しく教えてください！';
+        let msg = `【あなたの回答内容】\n`;
+        if (labelsA.length > 0) msg += `\n▼ 腸内環境チェック（${labelsA.length}項目）\n` + labelsA.join('\n');
+        if (labelsB.length > 0) msg += `\n\n▼ 栄養状態チェック（${labelsB.length}項目）\n` + labelsB.join('\n');
+        if (labelsC.length > 0) msg += `\n\n▼ 自律神経チェック（${labelsC.length}項目）\n` + labelsC.join('\n');
+        if (labelsA.length === 0 && labelsB.length === 0 && labelsC.length === 0) {
+            msg += '\n（チェックなし）';
+        }
         return msg;
     }
 
-    // LINEに送信（LINE内ならliff.sendMessages、外部ブラウザならリンク）
+    // LINEに2通送信（1通目：キーワード、2通目：詳細）
     async function sendToLine() {
         const btn = document.getElementById('btnLine');
         const type = btn.dataset.type;
-        const messageText = buildLineMessageRaw(type);
 
         if (liff.isInClient()) {
             try {
-                await liff.sendMessages([{ type: 'text', text: messageText }]);
+                await liff.sendMessages([
+                    { type: 'text', text: TYPE_KEYWORDS[type] },
+                    { type: 'text', text: buildDetailMessage(type) }
+                ]);
                 btn.textContent = '✓ 送信しました！';
                 btn.style.background = '#A8C5B0';
                 btn.style.color = '#2C3E30';
@@ -1009,7 +1021,6 @@
                 window.open(`https://line.me/R/ti/p/@${LINE_ACCOUNT_ID}`, '_blank');
             }
         } else {
-            // 外部ブラウザのフォールバック：LINEアプリを開く
             window.open(`https://line.me/R/ti/p/@${LINE_ACCOUNT_ID}`, '_blank');
         }
     }

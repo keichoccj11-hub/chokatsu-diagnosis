@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>よくある質問 | ケイの腸活相談室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green: #4A7C59;
+    --green-light: #8BB5A0;
+    --green-pale: #EAF2EC;
+    --cream: #FAF5EC;
+    --cream-dark: #F0E8D5;
+    --text: #2D2D2D;
+    --text-light: #666;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ヘッダー */
+  .header {
+    background: linear-gradient(160deg, #EAF2EC 0%, #FAF5EC 60%, #F0E8D5 100%);
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(139,181,160,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -20px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(74,124,89,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .leaf-deco {
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 28px;
+    opacity: 0.6;
+    transform: rotate(20deg);
+  }
+
+  .header-icon {
+    width: 72px; height: 72px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+    box-shadow: 0 4px 20px rgba(74,124,89,0.25);
+  }
+
+  .header h1 {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+
+  .header-underline {
+    width: 40px;
+    height: 2px;
+    background: var(--green);
+    margin: 0 auto 14px;
+    border-radius: 2px;
+  }
+
+  .header p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* コンテンツ */
+  .content {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+  }
+
+  /* FAQカード */
+  .faq-item {
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(74,124,89,0.08);
+    border: 1px solid rgba(139,181,160,0.2);
+    transition: box-shadow 0.2s;
+  }
+
+  .faq-item:hover {
+    box-shadow: 0 4px 20px rgba(74,124,89,0.15);
+  }
+
+  .faq-question {
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .q-badge {
+    width: 28px; height: 28px;
+    background: var(--green);
+    color: #fff;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .q-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .q-arrow {
+    font-size: 12px;
+    color: var(--green-light);
+    flex-shrink: 0;
+    margin-top: 4px;
+    transition: transform 0.3s;
+  }
+
+  .faq-item.open .q-arrow {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    display: none;
+    padding: 0 20px 20px 60px;
+  }
+
+  .faq-item.open .faq-answer {
+    display: block;
+  }
+
+  .a-badge {
+    display: inline-block;
+    background: var(--green-pale);
+    color: var(--green);
+    font-weight: 700;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .faq-answer p {
+    font-size: 14px;
+    line-height: 1.85;
+    color: #444;
+    margin-bottom: 8px;
+  }
+
+  .faq-answer p:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-answer .highlight {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* リストスタイル */
+  .faq-answer .list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  .list-dot {
+    width: 8px; height: 8px;
+    background: var(--green-light);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .caption {
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 700;
+    background: var(--green-pale);
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 8px;
+  }
+
+  /* セクション区切り */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green-light);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 32px 0 12px;
+    padding-left: 4px;
+  }
+
+  /* CTAセクション */
+  .cta-section {
+    background: linear-gradient(135deg, #4A7C59 0%, #3a6347 100%);
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '🌿';
+    position: absolute;
+    top: -5px; right: 15px;
+    font-size: 48px;
+    opacity: 0.15;
+    transform: rotate(25deg);
+  }
+
+  .cta-section h3 {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .cta-section p {
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .cta-btn {
+    display: block;
+    background: #F4D35E;
+    color: #2C3E30;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .cta-btn:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  /* フッター */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  /* アニメーション */
+  .faq-answer {
+    animation: none;
+  }
+  .faq-item.open .faq-answer {
+    animation: fadeIn 0.25s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="header">
+  <div class="leaf-deco">🌿</div>
+  <div class="header-icon">❓</div>
+  <h1>よくある質問</h1>
+  <div class="header-underline"></div>
+  <p>よくいただく質問にお答えします。<br>気になることがあればお気軽にどうぞ🌿</p>
+</div>
+
+<!-- コンテンツ -->
+<div class="content">
+
+  <div class="section-label">腸活について</div>
+
+  <!-- Q1 -->
+  <div class="faq-item open">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <div class="q-badge">Q</div>
+      <div class="q-text">何から始めれば？</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="faq-answer">
+      <div class="a-badge">A</div>
+      <div class="list-item"><div class="list-dot"></div><span>発酵食品を1つ追加する</span></div>
+      <div class="list-item"><div class="list-dot"></div><span>食物繊維を意識する</span></div>
+      <div class="list-item"><div class="list-dot"></div><span>水を1.5〜2.0L飲む</span></div>
+      <p></p>
+      <span class="caption">1つずつ試していきましょう</span>
+    </div>
+  </div>
+
+  <div class="section-label">相談について</div>
+
+  <!-- Q2 -->
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <div class="q-badge">Q</div>
+      <div class="q-text">肌悩み以外も大丈夫？</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="faq-answer">
+      <div class="a-badge">A</div>
+      <p>もちろんです。<br>肌悩み以外のご相談も大歓迎です。</p>
+      <p>どんな悩みも腸に通ずるので、対応可能です。</p>
+      <p>実際、<span class="highlight">痩せたいけど痩せれない</span>といった悩み相談が人気です。</p>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <div class="q-badge">Q</div>
+      <div class="q-text">男性でも大丈夫？</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="faq-answer">
+      <div class="a-badge">A</div>
+      <p>もちろんです。<br>男性のご相談も大歓迎です。</p>
+      <p>仕事のパフォーマンス・疲労・ストレスによる胃腸の不調など、男性特有の悩みにも対応しています。</p>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <div class="q-badge">Q</div>
+      <div class="q-text">遠方でも相談できますか？</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="faq-answer">
+      <div class="a-badge">A</div>
+      <p>はい、オンラインでの相談に対応しています。</p>
+      <p><span class="highlight">スマホ1台あればどこからでも</span>ご相談いただけます。</p>
+      <p>関東近郊の方は対面でのご相談も可能です。</p>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <div class="q-badge">Q</div>
+      <div class="q-text">初めてですが大丈夫ですか？</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="faq-answer">
+      <div class="a-badge">A</div>
+      <p><span class="highlight">初めての方こそ大歓迎です。</span></p>
+      <p>最初から正しい方法を一緒に見つけましょう。</p>
+      <p>何度試しても続かなかった方にも対応しています。</p>
+    </div>
+  </div>
+
+  <div class="section-label">料金・その他</div>
+
+  <!-- Q6 -->
+  <div class="faq-item">
+    <div class="faq-question" onclick="toggleFaq(this)">
+      <div class="q-badge">Q</div>
+      <div class="q-text">料金はいくらですか？</div>
+      <div class="q-arrow">▼</div>
+    </div>
+    <div class="faq-answer">
+      <div class="a-badge">A</div>
+      <p><span class="highlight">無料です。</span></p>
+      <p>継続サポートについては、ご相談内容に合わせてご提案します。</p>
+      <p>まずは無料相談でお気軽にどうぞ。</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h3>他にも質問があれば</h3>
+    <p>DMまたは公式LINEへ<br>お気軽にどうぞ🌿</p>
+    <a href="https://line.me/R/ti/p/@473fdxsw" class="cta-btn">💬 まずは気軽に相談から</a>
+  </div>
+
+</div>
+
+<div class="footer">
+  © ケイの腸活相談室 | LINE公式アカウント
+</div>
+
+<script>
+  function toggleFaq(questionEl) {
+    const item = questionEl.parentElement;
+    item.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>

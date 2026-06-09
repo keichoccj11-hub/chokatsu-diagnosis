@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セミナー申し込み | ケイの腸活相談室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green: #4A7C59;
+    --green-light: #8BB5A0;
+    --green-pale: #EAF2EC;
+    --cream: #FAF5EC;
+    --cream-dark: #F0E8D5;
+    --text: #2D2D2D;
+    --text-light: #666;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+  }
+
+  .hero {
+    background: linear-gradient(160deg, #2D5A3D 0%, #4A7C59 50%, #6B9E7A 100%);
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '🌿';
+    position: absolute;
+    top: 16px; left: 20px;
+    font-size: 40px;
+    opacity: 0.2;
+    transform: rotate(-20deg);
+  }
+
+  .hero::after {
+    content: '🌿';
+    position: absolute;
+    bottom: 16px; right: 20px;
+    font-size: 40px;
+    opacity: 0.2;
+    transform: rotate(20deg) scaleX(-1);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 4px 14px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .hero h1 {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .content {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 36px 20px 80px;
+  }
+
+  /* フォームカード */
+  .form-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 2px 16px rgba(74,124,89,0.08);
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .badge-required {
+    background: var(--green);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .badge-optional {
+    background: #ddd;
+    color: #888;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #dde;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--text);
+    background: #fafafa;
+    transition: border-color 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--green);
+    background: #fff;
+  }
+
+  .form-input::placeholder {
+    color: #bbb;
+    font-size: 14px;
+  }
+
+  textarea.form-input {
+    resize: vertical;
+    min-height: 96px;
+    line-height: 1.7;
+  }
+
+  /* 日程チェックボックス */
+  .date-note {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 12px;
+  }
+
+  .checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--green-pale);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .checkbox-item:hover {
+    background: #d8eadd;
+  }
+
+  .checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--green);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .checkbox-item span {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* 日程読み込み中 */
+  .loading-text {
+    font-size: 13px;
+    color: var(--text-light);
+    padding: 8px 0;
+  }
+
+  /* 送信ボタン */
+  .submit-btn {
+    display: block;
+    width: 100%;
+    background: var(--green);
+    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    margin-top: 28px;
+    box-shadow: 0 4px 16px rgba(74,124,89,0.3);
+    transition: opacity 0.2s, transform 0.1s;
+    -webkit-appearance: none;
+  }
+
+  .submit-btn:hover { opacity: 0.88; }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .privacy-note {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+
+  .error-msg {
+    font-size: 12px;
+    color: #e05555;
+    margin-top: 6px;
+    display: none;
+  }
+
+  .submit-error {
+    background: #fff0f0;
+    border: 1px solid #f5c0c0;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13px;
+    color: #c0392b;
+    margin-top: 16px;
+    text-align: center;
+    display: none;
+  }
+
+  /* 完了画面 */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .success-icon {
+    font-size: 56px;
+    margin-bottom: 20px;
+  }
+
+  .success-screen h2 {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+
+  .success-screen p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .back-btn {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: #aaa;
+  }
+</style>
+</head>
+<body>
+
+<!-- ヒーロー -->
+<div class="hero">
+  <div class="hero-badge">🌿 無料オンラインセミナー</div>
+  <h1>セミナー<br>申し込みフォーム</h1>
+  <p>ご希望の日程を選んで<br>フォームを送信してください。</p>
+</div>
+
+<div class="content">
+
+  <!-- フォーム -->
+  <div class="form-card" id="formCard">
+    <form id="applyForm" novalidate>
+
+      <!-- 名前 -->
+      <div class="form-group">
+        <label class="form-label">
+          お名前
+          <span class="badge-required">必須</span>
+        </label>
+        <input type="text" name="name" class="form-input" placeholder="例：田中 花子" required>
+        <p class="error-msg" id="nameError">お名前を入力してください。</p>
+      </div>
+
+      <!-- メール -->
+      <div class="form-group">
+        <label class="form-label">
+          メールアドレス
+          <span class="badge-required">必須</span>
+        </label>
+        <input type="email" name="email" class="form-input" placeholder="例：example@gmail.com" required>
+        <p class="error-msg" id="emailError">正しいメールアドレスを入力してください。</p>
+      </div>
+
+      <!-- 希望日程 -->
+      <div class="form-group">
+        <label class="form-label">
+          ご希望の日程
+          <span class="badge-required">必須</span>
+        </label>
+        <p class="date-note">複数選択可。確定後にメールでご連絡します。</p>
+        <div class="checkbox-list" id="dateList">
+          <p class="loading-text">日程を読み込み中...</p>
+        </div>
+        <p class="error-msg" id="dateError">日程を1つ以上選択してください。</p>
+      </div>
+
+      <!-- ひとこと -->
+      <div class="form-group">
+        <label class="form-label">
+          今のお悩み・ひとこと
+          <span class="badge-optional">任意</span>
+        </label>
+        <textarea name="message" class="form-input" placeholder="気になっていること、聞いてみたいことなど、なんでもどうぞ。"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">🌿 申し込む</button>
+      <p class="privacy-note">いただいた情報はセミナーの運営のみに使用します。<br>第三者への提供は一切行いません。</p>
+      <div class="submit-error" id="submitError">
+        送信に失敗しました。時間をおいて再度お試しいただくか、<br>LINEからご連絡ください。
+      </div>
+
+    </form>
+  </div>
+
+  <!-- 完了画面 -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✅</div>
+    <h2>申し込みが完了しました！</h2>
+    <p>ご登録いただいたメールアドレスに<br>2〜3営業日以内にご連絡します。<br><br>しばらくお待ちください🌿</p>
+    <a href="seminar.html" class="back-btn">← セミナーページに戻る</a>
+  </div>
+
+</div>
+
+<div class="footer">
+  © ケイの腸活相談室 | LINE公式アカウント
+</div>
+
+<script>
+  // =============================================
+  // 日程をJSONから読み込んでチェックボックスを生成
+  // =============================================
+  async function loadDates() {
+    const dateList = document.getElementById('dateList');
+    try {
+      const res = await fetch('./seminar-dates.json?t=' + Date.now());
+      const data = await res.json();
+      if (!data.dates || data.dates.length === 0) {
+        dateList.innerHTML = '<p class="loading-text">現在、開催日程を調整中です。<br>もうしばらくお待ちください。</p>';
+        return;
+      }
+      dateList.innerHTML = data.dates.map((date, i) => `
+        <label class="checkbox-item">
+          <input type="checkbox" name="dates" value="${date}">
+          <span>${date}</span>
+        </label>
+      `).join('');
+    } catch (e) {
+      dateList.innerHTML = '<p class="loading-text">日程の読み込みに失敗しました。ページを再読み込みしてください。</p>';
+    }
+  }
+
+  loadDates();
+
+  // =============================================
+  // フォーム送信
+  // ※ Formspreeのフォームを作成後、下のURLの YOUR_FORM_ID を置き換えてください
+  //   手順: https://formspree.io → 新規フォーム作成 → フォームIDをコピー
+  // =============================================
+  const FORMSPREE_URL = 'https://formspree.io/f/xjgdrzrg';
+
+  document.getElementById('applyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // バリデーション
+    let hasError = false;
+
+    const name = this.querySelector('[name="name"]');
+    const email = this.querySelector('[name="email"]');
+    const checkedDates = this.querySelectorAll('[name="dates"]:checked');
+
+    document.getElementById('nameError').style.display = 'none';
+    document.getElementById('emailError').style.display = 'none';
+    document.getElementById('dateError').style.display = 'none';
+    document.getElementById('submitError').style.display = 'none';
+
+    if (!name.value.trim()) {
+      document.getElementById('nameError').style.display = 'block';
+      hasError = true;
+    }
+
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      document.getElementById('emailError').style.display = 'block';
+      hasError = true;
+    }
+
+    if (checkedDates.length === 0) {
+      document.getElementById('dateError').style.display = 'block';
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // 送信
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '送信中...';
+
+    const formData = new FormData();
+    formData.append('name', name.value.trim());
+    formData.append('email', email.value.trim());
+    const selectedDates = Array.from(checkedDates).map(cb => cb.value).join('、');
+    formData.append('希望日程', selectedDates);
+    const message = this.querySelector('[name="message"]').value.trim();
+    if (message) formData.append('お悩み・ひとこと', message);
+
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('successScreen').style.display = 'block';
+        window.scrollTo(0, 0);
+      } else {
+        document.getElementById('submitError').style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '🌿 申し込む';
+      }
+    } catch (err) {
+      document.getElementById('submitError').style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '🌿 申し込む';
+    }
+  });
+</script>
+
+</body>
+</html>

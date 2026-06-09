@@ -222,6 +222,16 @@
     vertical-align: middle;
   }
 
+  .date-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .date-list li {
+    padding: 2px 0;
+  }
+
   /* CTA */
   .cta-section {
     background: linear-gradient(135deg, #4A7C59 0%, #3a6347 100%);
@@ -353,15 +363,19 @@
     </div>
     <div class="info-row">
       <span class="info-label">日程</span>
-      <span class="info-value">次回開催日はLINEにてお知らせします🌿</span>
+      <span class="info-value">
+        <ul class="date-list" id="dateListInfo">
+          <li>読み込み中...</li>
+        </ul>
+      </span>
     </div>
   </div>
 
   <!-- CTA -->
   <div class="cta-section">
-    <h3>次回開催の通知を受け取る</h3>
-    <p>開催日程はLINE公式アカウントで<br>いち早くお知らせします。</p>
-    <a href="https://line.me/R/ti/p/@473fdxsw" class="cta-btn">🌿 LINEで通知を受け取る</a>
+    <h3>無料セミナーに参加する</h3>
+    <p>希望日程を選んで、フォームから<br>簡単に申し込めます。</p>
+    <a href="seminar-apply.html" class="cta-btn">🌿 セミナーに申し込む</a>
   </div>
 
 </div>
@@ -369,6 +383,25 @@
 <div class="footer">
   © ケイの腸活相談室 | LINE公式アカウント
 </div>
+
+<script>
+  // 開催概要の日程欄をJSONから読み込む
+  async function loadDates() {
+    const el = document.getElementById('dateListInfo');
+    try {
+      const res = await fetch('./seminar-dates.json?t=' + Date.now());
+      const data = await res.json();
+      if (!data.dates || data.dates.length === 0) {
+        el.innerHTML = '<li>日程調整中です。もうしばらくお待ちください🌿</li>';
+        return;
+      }
+      el.innerHTML = data.dates.map(d => `<li>・${d}</li>`).join('');
+    } catch (e) {
+      el.innerHTML = '<li>日程調整中です。もうしばらくお待ちください🌿</li>';
+    }
+  }
+  loadDates();
+</script>
 
 </body>
 </html>

@@ -8,24 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
     --green: #4A7C59;
     --green-light: #8BB5A0;
     --green-pale: #EAF2EC;
     --cream: #FAF5EC;
-    --cream-dark: #F0E8D5;
     --text: #2D2D2D;
     --text-light: #666;
   }
+  body { font-family: 'Noto Sans JP', sans-serif; background: var(--cream); color: var(--text); }
 
-  body {
-    font-family: 'Noto Sans JP', sans-serif;
-    background: var(--cream);
-    color: var(--text);
-  }
-
-  /* ヒーロー */
   .hero {
     background: linear-gradient(160deg, #2D5A3D 0%, #4A7C59 50%, #6B9E7A 100%);
     padding: 56px 24px 48px;
@@ -33,389 +25,133 @@
     position: relative;
     overflow: hidden;
   }
+  .hero::before { content: '🌿'; position: absolute; top: 16px; left: 20px; font-size: 40px; opacity: 0.2; transform: rotate(-20deg); }
+  .hero::after { content: '🌿'; position: absolute; bottom: 16px; right: 20px; font-size: 40px; opacity: 0.2; transform: rotate(20deg) scaleX(-1); }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,0.2); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.15em; padding: 4px 14px; border-radius: 50px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.3); }
+  .hero h1 { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 26px; font-weight: 700; color: #fff; line-height: 1.5; margin-bottom: 12px; }
+  .hero p { color: rgba(255,255,255,0.85); font-size: 13px; line-height: 1.8; }
 
-  .hero::before {
-    content: '🌿';
-    position: absolute;
-    top: 16px; left: 20px;
-    font-size: 40px;
-    opacity: 0.2;
-    transform: rotate(-20deg);
-  }
+  .content { max-width: 480px; margin: 0 auto; padding: 36px 20px 80px; }
 
-  .hero::after {
-    content: '🌿';
-    position: absolute;
-    bottom: 16px; right: 20px;
-    font-size: 40px;
-    opacity: 0.2;
-    transform: rotate(20deg) scaleX(-1);
-  }
+  .section-title { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 16px; padding-left: 12px; border-left: 3px solid var(--green); }
 
-  .hero-badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    padding: 4px 14px;
-    border-radius: 50px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255,255,255,0.3);
-  }
+  .intro { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 32px; box-shadow: 0 2px 12px rgba(74,124,89,0.08); font-size: 14px; color: #444; line-height: 1.9; }
 
-  .hero h1 {
-    font-family: 'Zen Kaku Gothic New', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.5;
-    margin-bottom: 14px;
-    letter-spacing: 0.02em;
-  }
+  /* グリッド */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 40px; }
 
-  .hero p {
-    color: rgba(255,255,255,0.85);
-    font-size: 13px;
-    line-height: 1.8;
-  }
-
-  /* コンテンツ */
-  .content {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 36px 20px 100px;
-  }
-
-  .section-title {
-    font-family: 'Zen Kaku Gothic New', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--green);
-    margin-bottom: 16px;
-    padding-left: 12px;
-    border-left: 3px solid var(--green);
-  }
-
-  .divider {
-    height: 1px;
-    background: rgba(74,124,89,0.1);
-    margin: 32px 0;
-  }
-
-  /* ① つかみ */
-  .intro-card {
+  .grid-card {
     background: #fff;
     border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 32px;
+    padding: 18px 14px;
     box-shadow: 0 2px 12px rgba(74,124,89,0.08);
-  }
-
-  .intro-card p {
-    font-size: 14px;
-    line-height: 1.9;
-    color: #444;
-  }
-
-  .intro-card p + p {
-    margin-top: 14px;
-  }
-
-  .intro-highlight {
-    background: var(--green-pale);
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-top: 16px;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--green);
-    line-height: 1.6;
-  }
-
-  /* ② 習慣カード */
-  .habit-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 12px rgba(74,124,89,0.08);
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-  }
-
-  .habit-num {
-    width: 36px;
-    height: 36px;
-    background: var(--green);
-    color: #fff;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-
-  .habit-body h3 {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-
-  .habit-body p {
-    font-size: 12px;
-    color: var(--text-light);
-    line-height: 1.8;
-  }
-
-  .habit-reason {
-    display: inline-block;
-    background: var(--green-pale);
-    color: var(--green);
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 50px;
-    margin-bottom: 6px;
-  }
-
-  /* ③ 落とし穴 */
-  .trap-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 12px rgba(74,124,89,0.08);
-    border-left: 3px solid #E07A5F;
-  }
-
-  .trap-card h3 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #C0392B;
-    margin-bottom: 8px;
-    line-height: 1.5;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .trap-card p {
-    font-size: 12px;
-    color: var(--text-light);
-    line-height: 1.8;
-  }
-
-  /* ④ 個人差 */
-  .diff-card {
-    background: var(--green-pale);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 32px;
-  }
-
-  .diff-card p {
-    font-size: 14px;
-    color: #444;
-    line-height: 1.9;
-  }
-
-  .diff-card p + p {
-    margin-top: 14px;
-  }
-
-  .diff-emphasis {
-    font-weight: 700;
-    color: var(--green);
-    font-size: 15px;
-    display: block;
-    margin-top: 16px;
-    line-height: 1.6;
-  }
-
-  /* ⑤ CTA */
-  .cta-section {
-    background: linear-gradient(135deg, #4A7C59 0%, #3a6347 100%);
-    border-radius: 20px;
-    padding: 32px 24px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-section::before {
-    content: '🌿';
-    position: absolute;
-    top: -5px; right: 15px;
-    font-size: 48px;
-    opacity: 0.15;
-    transform: rotate(25deg);
-  }
-
-  .cta-section h3 {
-    font-family: 'Zen Kaku Gothic New', sans-serif;
-    color: #fff;
-    font-size: 18px;
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  .cta-section p {
-    color: rgba(255,255,255,0.85);
-    font-size: 13px;
-    line-height: 1.8;
-    margin-bottom: 20px;
-  }
-
-  .cta-note {
-    color: rgba(255,255,255,0.65);
-    font-size: 11px;
-    margin-top: 12px;
-    margin-bottom: 0 !important;
-  }
-
-  .cta-btn {
-    display: block;
-    background: #F4D35E;
-    color: #2C3E30;
-    font-weight: 700;
-    font-size: 15px;
-    padding: 14px 32px;
-    border-radius: 50px;
     text-decoration: none;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
+  .grid-card:active { transform: scale(0.97); }
 
-  .footer {
+  .card-icon { font-size: 28px; }
+  .card-title { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.4; }
+  .card-desc { font-size: 11px; color: var(--text-light); line-height: 1.6; flex-grow: 1; }
+  .card-link { font-size: 11px; font-weight: 700; color: var(--green); margin-top: 4px; }
+
+  /* Instagramノート */
+  .ig-note {
+    background: var(--green-pale);
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
     text-align: center;
-    padding: 24px;
-    font-size: 12px;
-    color: #aaa;
   }
+  .ig-note a { color: var(--green); font-weight: 700; text-decoration: none; }
+
+  .footer { text-align: center; padding: 24px; font-size: 12px; color: #aaa; }
 </style>
 </head>
 <body>
 
-<!-- ヒーロー -->
 <div class="hero">
   <div class="hero-badge">🌿 腸活習慣</div>
-  <h1>腸活習慣、<br>みんな同じでいいの？</h1>
-  <p>続けているのに変わらないのは、<br>方法がズレているだけかもしれない。</p>
+  <h1>腸活習慣を<br>学ぼう</h1>
+  <p>知識が増えるほど、<br>あなたに合った腸活が見つかります。</p>
 </div>
 
 <div class="content">
 
-  <!-- ① つかみ -->
-  <p class="section-title">なぜ「正しい腸活」をしているのに変わらないのか</p>
-  <div class="intro-card">
-    <p>「ヨーグルト毎日食べてます」「食物繊維も意識してます」</p>
-    <p>それでも便秘が続く、肌が荒れる、疲れが取れない。</p>
-    <p>実は腸内環境は人によってまったく違います。善玉菌の種類も、腸の動きのクセも、何に反応するかも、ひとりひとり異なります。</p>
-    <div class="intro-highlight">
-      「みんなにいい腸活」は存在しても、<br>「あなたにいい腸活」は自分で見つけるしかない。
-    </div>
+  <p class="section-title">テーマから選ぶ</p>
+  <div class="intro">気になるテーマをタップして、詳しい内容を確認してください。</div>
+
+  <div class="grid">
+    <a href="habits-morning.html" class="grid-card">
+      <div class="card-icon">🌅</div>
+      <div class="card-title">朝の腸活ルーティン</div>
+      <div class="card-desc">1日の腸の動きは朝で決まる</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
+    <a href="habits-food-good.html" class="grid-card">
+      <div class="card-icon">🥗</div>
+      <div class="card-title">腸活に効く食べ物</div>
+      <div class="card-desc">何を食べるかが腸内環境を変える</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
+    <a href="habits-food-bad.html" class="grid-card">
+      <div class="card-icon">⚠️</div>
+      <div class="card-title">逆効果な食べ物・習慣</div>
+      <div class="card-desc">知らずにやっている落とし穴</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
+    <a href="habits-stress.html" class="grid-card">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">ストレスと腸の関係</div>
+      <div class="card-desc">心と腸はつながっている</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
+    <a href="habits-skin.html" class="grid-card">
+      <div class="card-icon">✨</div>
+      <div class="card-title">肌荒れ・ニキビと腸</div>
+      <div class="card-desc">スキンケアだけでは限界がある理由</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
+    <a href="habits-fatigue.html" class="grid-card">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">疲れ・集中力と腸</div>
+      <div class="card-desc">パフォーマンスは腸から変わる</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
+    <a href="habits-constipation.html" class="grid-card">
+      <div class="card-icon">💊</div>
+      <div class="card-title">便秘のタイプ別対策</div>
+      <div class="card-desc">タイプが違えば対策も変わる</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
+    <a href="habits-sleep.html" class="grid-card">
+      <div class="card-icon">🌙</div>
+      <div class="card-title">睡眠と腸の関係</div>
+      <div class="card-desc">眠れない原因が腸にあることも</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
+    <a href="habits-supplement.html" class="grid-card" style="grid-column: 1 / -1;">
+      <div class="card-icon">🧴</div>
+      <div class="card-title">腸活サプリの選び方</div>
+      <div class="card-desc">選び方を間違えると意味がない。何を基準に選ぶべきかを解説します。</div>
+      <div class="card-link">詳しく見る →</div>
+    </a>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- ② 習慣5つ -->
-  <p class="section-title">まず押さえたい腸活習慣5つ</p>
-
-  <div class="habit-card">
-    <div class="habit-num">01</div>
-    <div class="habit-body">
-      <span class="habit-reason">🔬 科学的根拠あり</span>
-      <h3>朝起きたらコップ1杯の水を飲む</h3>
-      <p>睡眠中に失われた水分を補給し、腸のぜん動運動を促します。白湯にするとより効果的。起き抜けのこの1杯が、1日の腸の動きを左右します。</p>
-    </div>
-  </div>
-
-  <div class="habit-card">
-    <div class="habit-num">02</div>
-    <div class="habit-body">
-      <span class="habit-reason">🔬 科学的根拠あり</span>
-      <h3>発酵食品を毎日少量ずつ摂る</h3>
-      <p>ヨーグルト・納豆・味噌など。「大量に食べる」より「毎日続ける」が重要です。腸内細菌は継続的な供給がないと定着しません。量より頻度。</p>
-    </div>
-  </div>
-
-  <div class="habit-card">
-    <div class="habit-num">03</div>
-    <div class="habit-body">
-      <span class="habit-reason">🔬 科学的根拠あり</span>
-      <h3>食物繊維は「水溶性」を意識する</h3>
-      <p>食物繊維には水溶性と不溶性の2種類があります。多くの人が不溶性（野菜・穀物）に偏りがち。善玉菌のエサになる水溶性（わかめ・りんご・オートミール）を意識的に取り入れましょう。</p>
-    </div>
-  </div>
-
-  <div class="habit-card">
-    <div class="habit-num">04</div>
-    <div class="habit-body">
-      <span class="habit-reason">🔬 科学的根拠あり</span>
-      <h3>食事の時間をできるだけ一定にする</h3>
-      <p>腸には体内時計があります。バラバラな食事時間は腸のリズムを乱します。特に朝食を抜くと腸の動きが一日ズレやすくなります。</p>
-    </div>
-  </div>
-
-  <div class="habit-card">
-    <div class="habit-num">05</div>
-    <div class="habit-body">
-      <span class="habit-reason">🔬 科学的根拠あり</span>
-      <h3>ストレスを「腸の問題」として意識する</h3>
-      <p>腸と脳は迷走神経でつながっています（腸脳相関）。精神的ストレスが腸の動きを直接乱します。緊張するとお腹が痛くなるのはこのためです。</p>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- ③ 落とし穴 -->
-  <p class="section-title">実は逆効果になっていることも</p>
-
-  <div class="trap-card">
-    <h3>⚠️ ヨーグルトを大量に食べる</h3>
-    <p>乳糖不耐症気味の人は、ヨーグルトでお腹が張ったり下痢になることがあります。「腸にいいから」と大量に食べると逆効果になるケースも。自分の体の反応をよく観察してください。</p>
-  </div>
-
-  <div class="trap-card">
-    <h3>⚠️ 食物繊維を一気に増やす</h3>
-    <p>腸内環境が整っていない状態で急に食物繊維を増やすと、ガスが発生して逆に腸に負担をかけることがあります。少しずつ増やすのが正解です。</p>
-  </div>
-
-  <div class="trap-card">
-    <h3>⚠️ 市販の便秘薬に頼り続ける</h3>
-    <p>刺激性の下剤（センナ・アロエなど）は腸を無理やり動かすもの。長期使用で腸が自力で動く力を失っていくことがあります。根本的なアプローチが必要です。</p>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- ④ 個人差 -->
-  <p class="section-title">同じ習慣でも「あなたに合っているか」は別の話</p>
-  <div class="diff-card">
-    <p>腸内細菌の種類と割合は、指紋と同じくらい個人差があると言われています。</p>
-    <p>同じ発酵食品を食べても、効果が出る人と出ない人がいる。同じ食事制限をしても、体重が落ちる人と落ちない人がいる。</p>
-    <p>それは意志の問題でも、努力が足りないわけでもありません。</p>
-    <span class="diff-emphasis">「自分の腸に何が合っているか」を知ることが、腸活の本当のスタート地点です。</span>
-  </div>
-
-  <!-- ⑤ CTA -->
-  <div class="cta-section">
-    <h3>あなたに合った腸活、<br>一緒に探しませんか？</h3>
-    <p>食事・生活習慣・体の状態をヒアリングして、あなたにとって何が合っているかを一緒に整理します。押しつけや高額な商品の案内は一切しません。</p>
-    <a href="https://timerex.net/s/kei.choccj11_ab95/2706d5af" class="cta-btn">💬 無料相談を予約する</a>
-    <p class="cta-note">まずは気軽に話してみてください🌿</p>
+  <div class="ig-note">
+    🌿 現在Instagramも開設したばかりで、<br>掲載できている情報はまだ限られています。<br><br>
+    今後、より詳しい腸活情報を<br>Instagramで随時発信していきますので、<br>ぜひフォローしてお待ちください。<br><br>
+    <a href="https://www.instagram.com/cho.concierge.kei/" target="_blank">📸 @cho.concierge.kei をフォローする</a>
   </div>
 
 </div>
 
-<div class="footer">
-  © ケイの腸活相談室 | LINE公式アカウント
-</div>
-
+<div class="footer">© ケイの腸活相談室 | LINE公式アカウント</div>
 </body>
 </html>

@@ -160,7 +160,7 @@
     line-height: 1.7;
   }
 
-  /* 日程チェックボックス */
+  /* 日程ラジオボタン */
   .date-note {
     font-size: 12px;
     color: var(--text-light);
@@ -188,7 +188,7 @@
     background: #d8eadd;
   }
 
-  .checkbox-item input[type="checkbox"] {
+  .checkbox-item input[type="radio"] {
     width: 18px;
     height: 18px;
     accent-color: var(--green);
@@ -346,11 +346,11 @@
           ご希望の日程
           <span class="badge-required">必須</span>
         </label>
-        <p class="date-note">複数選択可。確定後にメールでご連絡します。</p>
+        <p class="date-note">ご希望の日程を1つ選択してください。</p>
         <div class="checkbox-list" id="dateList">
           <p class="loading-text">日程を読み込み中...</p>
         </div>
-        <p class="error-msg" id="dateError">日程を1つ以上選択してください。</p>
+        <p class="error-msg" id="dateError">日程を選択してください。</p>
       </div>
 
       <!-- ひとこと -->
@@ -375,7 +375,7 @@
   <div class="success-screen" id="successScreen">
     <div class="success-icon">✅</div>
     <h2>申し込みが完了しました！</h2>
-    <p>ご登録いただいたメールアドレスに<br>2〜3営業日以内にご連絡します。<br><br>しばらくお待ちください🌿</p>
+    <p>ご登録いただいたメールアドレスに<br>24時間以内にZoom URLをお送りします。<br><br>しばらくお待ちください🌿</p>
     <a href="seminar.html" class="back-btn">← セミナーページに戻る</a>
   </div>
 
@@ -400,7 +400,7 @@
       }
       dateList.innerHTML = data.dates.map((date, i) => `
         <label class="checkbox-item">
-          <input type="checkbox" name="dates" value="${date}">
+          <input type="radio" name="date" value="${date}">
           <span>${date}</span>
         </label>
       `).join('');
@@ -426,7 +426,7 @@
 
     const name = this.querySelector('[name="name"]');
     const email = this.querySelector('[name="email"]');
-    const checkedDates = this.querySelectorAll('[name="dates"]:checked');
+    const checkedDate = this.querySelector('[name="date"]:checked');
 
     document.getElementById('nameError').style.display = 'none';
     document.getElementById('emailError').style.display = 'none';
@@ -443,7 +443,7 @@
       hasError = true;
     }
 
-    if (checkedDates.length === 0) {
+    if (!checkedDate) {
       document.getElementById('dateError').style.display = 'block';
       hasError = true;
     }
@@ -458,8 +458,7 @@
     const formData = new FormData();
     formData.append('name', name.value.trim());
     formData.append('email', email.value.trim());
-    const selectedDates = Array.from(checkedDates).map(cb => cb.value).join('、');
-    formData.append('希望日程', selectedDates);
+    formData.append('希望日程', checkedDate.value);
     const message = this.querySelector('[name="message"]').value.trim();
     if (message) formData.append('お悩み・ひとこと', message);
 
